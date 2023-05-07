@@ -4,7 +4,7 @@ import {
   UpdateUserData,
   UserRepository,
 } from 'src/domain/repository/user.repository';
-import { PrismaService } from '../database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UserMysqlRepository implements UserRepository {
   async findById(id: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
-    return User.build(user);
+    return user ? User.build(user) : null;
   }
 
   async findAll(): Promise<User[]> {
